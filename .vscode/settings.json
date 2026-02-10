@@ -1,0 +1,40 @@
+{
+  // 核心：存檔時自動格式化
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // 明確針對 JS/TS 檔案使用 Prettier（避免其他語言被影響）
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // 如果你有裝 ESLint + Prettier 整合（強烈推薦）
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit" // 或直接 "true"
+  },
+
+  // 常見 Prettier 偏好（可依團隊規範調整）
+  "prettier.printWidth": 100, // Wails 前端常見設 80~120
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.bracketSpacing": true,
+
+  // 避免 Go 檔案被 Prettier 干擾（雖然 Prettier 不支援 Go，但保險）
+  "[go]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "golang.go"
+  }
+}
