@@ -1,6 +1,7 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import LocationIndicator from '@/components/LocationIndicator';
 
 // Fix Leaflet 預設 marker icon 在 Vite 環境破圖的問題
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -33,12 +34,8 @@ export default function Map() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* 測試用 Marker */}
-        <Marker position={DEFAULT_CENTER}>
-          <Popup>
-            📍 台北 101 <br /> 這是一個測試 Marker
-          </Popup>
-        </Marker>
+        {/* 使用者位置指示器 */}
+        <LocationIndicator position={DEFAULT_CENTER} />
       </MapContainer>
     </div>
   );
