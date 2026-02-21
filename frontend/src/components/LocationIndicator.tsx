@@ -22,14 +22,7 @@ const locationIcon = L.divIcon({
 });
 
 const LocationIndicator = ({ position }: LocationIndicatorProps) => {
-  return (
-    <Marker
-      position={position}
-      icon={locationIcon}
-      interactive={false}
-      zIndexOffset={1000}
-    />
-  );
+  return <Marker position={position} icon={locationIcon} interactive={false} zIndexOffset={1000} />;
 };
 
 export default LocationIndicator;
