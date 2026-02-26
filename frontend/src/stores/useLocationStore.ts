@@ -1,6 +1,6 @@
 // stores/useLocationStore.ts
 import { create } from 'zustand';
-import { GetLocationByIP } from '@/../bindings/changeme/locationservice';
+import { GetLocationByIP } from '@/../bindings/iGeoGo/backend/services/locationservice';
 
 export interface Coordinates {
   lat: number;

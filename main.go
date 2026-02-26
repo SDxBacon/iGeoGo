@@ -6,6 +6,8 @@ import (
 	"log"
 	"time"
 
+	"iGeoGo/backend/services"
+
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
@@ -38,8 +40,7 @@ func main() {
 		Name:        "iGeoGo",
 		Description: "A demo of using raw HTML & CSS",
 		Services: []application.Service{
-			application.NewService(&GreetService{}),
-			application.NewService(&LocationService{}),
+			application.NewService(&services.LocationService{}),
 		},
 		Assets: application.AssetOptions{
 			Handler: application.AssetFileServerFS(assets),

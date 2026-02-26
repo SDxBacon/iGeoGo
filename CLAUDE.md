@@ -16,9 +16,11 @@ Wails 3 桌面應用程式，使用 Go 後端 + React TypeScript 前端，搭配
 
 ```
 ├── main.go                  # Wails app 入口、視窗設定、事件廣播
-├── greetservice.go          # 範例 Go service（自動綁定到前端）
-├── go.mod                   # Go module（目前名稱為 changeme，待更名）
+├── go.mod                   # Go module（名稱：iGeoGo）
 ├── Taskfile.yml             # 主要 task 定義
+├── backend/
+│   └── services/            # Go services（package services）
+│       └── locationservice.go
 ├── build/
 │   ├── config.yml           # Wails 3 app 元資料與 dev mode 設定
 │   ├── darwin/              # macOS 建置
@@ -35,11 +37,11 @@ Wails 3 桌面應用程式，使用 Go 後端 + React TypeScript 前端，搭配
 │       ├── main.tsx         # React 入口
 │       ├── main.css         # 全域 CSS（import tailwind + 自訂 CSS）
 │       ├── App.tsx          # Root 元件：Header + Map + Footer
-│       ├── Map.tsx          # Leaflet 地圖元件
 │       ├── components/      # UI 元件
 │       │   ├── AppHeader.tsx
 │       │   ├── AppFooter.tsx
-│       │   └── LocationIndicator.tsx
+│       │   ├── LocationIndicator.tsx
+│       │   └── Map.tsx      # Leaflet 地圖元件
 │       └── styles/          # 自訂 CSS
 │           └── map.css      # 地圖相關樣式（動畫等）
 └── frontend/bindings/       # Wails 自動生成的 Go→TS 綁定（不要手動編輯）
@@ -66,7 +68,7 @@ pnpm build        # 單獨建置前端
 
 ### Go Backend
 - `main.go`: 初始化 Wails app、建立視窗、啟動事件 goroutine
-- Services 透過 `application.NewService()` 註冊，自動產生 TypeScript 綁定
+- Services 放在 `backend/services/`（`package services`），透過 `application.NewService()` 註冊，自動產生 TypeScript 綁定
 - 前端 dist 透過 `//go:embed frontend/dist` 嵌入二進位檔
 - macOS 視窗設定：隱藏標題列、半透明背景、50px invisible title bar
 
@@ -101,5 +103,4 @@ pnpm build        # 單獨建置前端
 - `noUnusedLocals: true`, `noUnusedParameters: false`, `noImplicitAny: false`
 
 ## Known Issues / TODOs
-- `go.mod` module name 仍為 `changeme`，需更名
 - `build/config.yml` 中的公司/產品資訊仍為 template 預設值

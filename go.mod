@@ -1,4 +1,4 @@
-module changeme
+module iGeoGo
 
 go 1.25
 

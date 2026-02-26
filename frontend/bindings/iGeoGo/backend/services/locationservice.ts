@@ -10,7 +10,7 @@ import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Cr
 import * as $models from "./models.js";
 
 export function GetLocationByIP(): $CancellablePromise<$models.IPLocation | null> {
-    return $Call.ByID(3984340605).then(($result: any) => {
+    return $Call.ByID(3235047092).then(($result: any) => {
         return $$createType1($result);
     });
 }
