@@ -1,6 +1,6 @@
-import Map from '@/Map';
 import useInitial from '@/hooks/useInitial';
 
+import Map from '@/components/Map';
 import AppHeader from '@/components/AppHeader';
 import AppFooter from '@/components/AppFooter';
 
