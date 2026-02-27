@@ -1,10 +1,8 @@
-import { useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
 import isNil from 'lodash/isNil';
 import LocationIndicator from '@/components/LocationIndicator';
 import useLocationStore from '@/stores/useLocationStore';
-import MyMapComponent from '@/components/MyMapComponent';
 // Fix Leaflet 預設 marker icon 在 Vite 環境破圖的問題
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -26,10 +24,6 @@ const DEFAULT_ZOOM = 13;
 function Map() {
   const currentLocation = useLocationStore((state) => state.currentLocation);
 
-  useEffect(() => {
-    if (isNil(currentLocation)) return;
-  }, [currentLocation]);
-
   return (
     <div className="flex-1">
       <MapContainer
@@ -48,8 +42,6 @@ function Map() {
         {isNil(currentLocation) ? null : (
           <LocationIndicator position={[currentLocation.lat, currentLocation.lng]} />
         )}
-        {/* 自訂地圖組件 */}
-        <MyMapComponent />
       </MapContainer>
     </div>
   );
