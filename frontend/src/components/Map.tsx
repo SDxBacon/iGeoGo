@@ -2,6 +2,7 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import L from 'leaflet';
 import isNil from 'lodash/isNil';
 import LocationIndicator from '@/components/LocationIndicator';
+import RouteLayer from '@/components/RouteLayer';
 import useLocationStore from '@/stores/useLocationStore';
 // Fix Leaflet 預設 marker icon 在 Vite 環境破圖的問題
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -37,6 +38,9 @@ function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+        {/* 路線：currentLocation → 台北 101 */}
+        <RouteLayer />
 
         {/* 使用者位置指示器 */}
         {isNil(currentLocation) ? null : (
