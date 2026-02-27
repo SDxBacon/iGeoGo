@@ -5,9 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "devtools": "react-devtools",
     "build:dev": "tsc && vite build --minify false --mode development",
     "build": "tsc && vite build --mode production",
     "preview": "vite preview"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["electron"]
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -27,6 +31,7 @@
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",
+    "react-devtools": "^7.0.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   }
