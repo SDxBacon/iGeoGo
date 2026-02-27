@@ -1,6 +1,9 @@
 // stores/useLocationStore.ts
 import { create } from 'zustand';
-import { GetLocationByIP } from '@/../bindings/iGeoGo/backend/services/locationservice';
+import {
+  GetLocationByIP,
+  GetNativeLocation,
+} from '@/../bindings/iGeoGo/backend/services/locationservice';
 
 export interface Coordinates {
   lat: number;
@@ -25,6 +28,21 @@ export const useLocationStore = create<LocationStore>((set) => ({
   init: async () => {
     set({ isLoading: true, error: null });
 
+    // 優先使用原生 CoreLocation（macOS，精確，會觸發系統授權對話框）
+    try {
+      const native = await GetNativeLocation();
+      if (native) {
+        set({
+          currentLocation: { lat: native.latitude, lng: native.longitude },
+          isLoading: false,
+        });
+        return;
+      }
+    } catch {
+      // 授權被拒絕、不支援或超時，降級至 IP 定位
+    }
+
+    // Fallback：IP 定位（精確度較低，但不需授權）
     try {
       const location = await GetLocationByIP();
       if (location) {
@@ -33,7 +51,7 @@ export const useLocationStore = create<LocationStore>((set) => ({
           isLoading: false,
         });
       }
-    } catch (err) {
+    } catch {
       set({ currentLocation: TAIPEI_101, isLoading: false, error: '無法取得位置，已使用預設位置' });
     }
   },

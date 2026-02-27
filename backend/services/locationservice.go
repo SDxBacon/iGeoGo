@@ -8,6 +8,22 @@ import (
 
 type LocationService struct{}
 
+// NativeLocation 代表裝置 GPS 定位的座標。
+type NativeLocation struct {
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
+}
+
+// GetNativeLocation 呼叫 CoreLocation（macOS）取得裝置 GPS 位置。
+// 首次呼叫時會觸發系統授權對話框。
+func (g *LocationService) GetNativeLocation() (*NativeLocation, error) {
+	lat, lng, err := getNativeLocation()
+	if err != nil {
+		return nil, err
+	}
+	return &NativeLocation{Latitude: lat, Longitude: lng}, nil
+}
+
 type IPLocation struct {
 	IP          string  `json:"ip"`
 	City        string  `json:"city"`
