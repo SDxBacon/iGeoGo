@@ -15,6 +15,18 @@ export function GetLocationByIP(): $CancellablePromise<$models.IPLocation | null
     });
 }
 
+/**
+ * GetNativeLocation 呼叫 CoreLocation（macOS）取得裝置 GPS 位置。
+ * 首次呼叫時會觸發系統授權對話框。
+ */
+export function GetNativeLocation(): $CancellablePromise<$models.NativeLocation | null> {
+    return $Call.ByID(2608345875).then(($result: any) => {
+        return $$createType3($result);
+    });
+}
+
 // Private type creation functions
 const $$createType0 = $models.IPLocation.createFrom;
 const $$createType1 = $Create.Nullable($$createType0);
+const $$createType2 = $models.NativeLocation.createFrom;
+const $$createType3 = $Create.Nullable($$createType2);

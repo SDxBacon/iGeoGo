@@ -7,5 +7,6 @@ export {
 };
 
 export {
-    IPLocation
+    IPLocation,
+    NativeLocation
 } from "./models.js";

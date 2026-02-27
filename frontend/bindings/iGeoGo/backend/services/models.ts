@@ -57,3 +57,31 @@ export class IPLocation {
         return new IPLocation($$parsedSource as Partial<IPLocation>);
     }
 }
+
+/**
+ * NativeLocation 代表裝置 GPS 定位的座標。
+ */
+export class NativeLocation {
+    "latitude": number;
+    "longitude": number;
+
+    /** Creates a new NativeLocation instance. */
+    constructor($$source: Partial<NativeLocation> = {}) {
+        if (!("latitude" in $$source)) {
+            this["latitude"] = 0;
+        }
+        if (!("longitude" in $$source)) {
+            this["longitude"] = 0;
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new NativeLocation instance from a string or object.
+     */
+    static createFrom($$source: any = {}): NativeLocation {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new NativeLocation($$parsedSource as Partial<NativeLocation>);
+    }
+}
