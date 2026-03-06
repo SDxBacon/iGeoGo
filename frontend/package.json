@@ -11,7 +11,9 @@
     "preview": "vite preview"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["electron"]
+    "onlyBuiltDependencies": [
+      "electron"
+    ]
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -23,6 +25,7 @@
     "react-dom": "19.0.0-rc.1",
     "react-leaflet": "5.0.0-rc.2",
     "tailwindcss": "^4.1.18",
+    "use-immer": "^0.11.0",
     "zustand": "^5.0.11"
   },
   "devDependencies": {
