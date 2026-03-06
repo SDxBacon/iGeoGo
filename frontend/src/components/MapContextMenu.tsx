@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMapEvents } from 'react-leaflet';
+import { useMapEvents } from 'react-leaflet/hooks';
 import type { LatLng } from 'leaflet';
 
 export interface ContextMenuState {
@@ -28,9 +28,16 @@ export function MapContextMenuHandler({ onOpen, onClose }: MapContextMenuHandler
     click() {
       onClose();
     },
-    drag() {
-      onClose();
-    },
+    /**
+     * not sure if we need to close the menu on these events, but just in case the user starts dragging or zooming after right-clicking
+     * stay observant
+     */
+    // dragstart() {
+    //   onClose();
+    // },
+    // zoomstart() {
+    //   onClose();
+    // },
   });
   return null;
 }

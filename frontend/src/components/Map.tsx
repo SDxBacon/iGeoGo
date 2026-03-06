@@ -38,7 +38,7 @@ function Map() {
   const [menuState, updateMenuState] = useImmer<ContextMenuState>(INITIAL_MENU_STATE);
 
   const handleMenuOpen = (state: Omit<ContextMenuState, 'visible'>) =>
-    updateMenuState(() => ({ visible: true, ...state }));
+    updateMenuState({ visible: true, ...state });
 
   const handleMenuClose = () =>
     updateMenuState((draft) => {
