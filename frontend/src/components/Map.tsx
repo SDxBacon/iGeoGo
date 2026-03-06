@@ -1,8 +1,14 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
+import { useImmer } from 'use-immer';
 import L from 'leaflet';
 import isNil from 'lodash/isNil';
+// import local components
 import LocationIndicator from '@/components/LocationIndicator';
 import RouteLayer from '@/components/RouteLayer';
+import MapContextMenu, {
+  MapContextMenuHandler,
+  type ContextMenuState,
+} from '@/components/MapContextMenu';
 import useLocationStore from '@/stores/useLocationStore';
 // Fix Leaflet 預設 marker icon 在 Vite 環境破圖的問題
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -22,15 +28,28 @@ L.Icon.Default.mergeOptions({
 const DEFAULT_CENTER: [number, number] = [25.0338, 121.5645];
 const DEFAULT_ZOOM = 13;
 
+const INITIAL_MENU_STATE: ContextMenuState = { visible: false, x: 0, y: 0, latlng: null };
+
+/**
+ * Map component 包含 Leaflet 地圖和相關功能
+ */
 function Map() {
   const currentLocation = useLocationStore((state) => state.currentLocation);
+  const [menuState, updateMenuState] = useImmer<ContextMenuState>(INITIAL_MENU_STATE);
+
+  const handleMenuOpen = (state: Omit<ContextMenuState, 'visible'>) =>
+    updateMenuState(() => ({ visible: true, ...state }));
+
+  const handleMenuClose = () =>
+    updateMenuState((draft) => {
+      draft.visible = false;
+    });
 
   return (
     <div className="flex-1">
       <MapContainer
         center={DEFAULT_CENTER}
         zoom={DEFAULT_ZOOM}
-        // className="size-full"
         style={{ width: '100%', height: '100%' }}
       >
         {/* OpenStreetMap 圖磚 */}
@@ -46,7 +65,13 @@ function Map() {
         {isNil(currentLocation) ? null : (
           <LocationIndicator position={[currentLocation.lat, currentLocation.lng]} />
         )}
+
+        {/* 右鍵選單事件處理 */}
+        <MapContextMenuHandler onOpen={handleMenuOpen} onClose={handleMenuClose} />
       </MapContainer>
+
+      {/* 右鍵浮動選單（在 MapContainer 外以避免 z-index 問題）*/}
+      <MapContextMenu {...menuState} onClose={handleMenuClose} />
     </div>
   );
 }
