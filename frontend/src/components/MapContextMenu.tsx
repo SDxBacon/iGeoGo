@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { useMapEvents } from 'react-leaflet';
 import type { LatLng } from 'leaflet';
 
@@ -39,6 +40,27 @@ interface MapContextMenuProps extends ContextMenuState {
 }
 
 function MapContextMenu({ visible, x, y, latlng, onClose }: MapContextMenuProps) {
+  const menuRef = useRef<HTMLDivElement>(null);
+  // 計算後的位置，null 表示尚未計算（用 visibility: hidden 避免閃爍）
+  const [clampedPos, setClampedPos] = useState<{ left: number; top: number } | null>(null);
+
+  useEffect(() => {
+    if (!visible) {
+      setClampedPos(null);
+      return;
+    }
+    // 等 DOM 渲染後再量測選單尺寸，計算視窗邊界內的位置
+    const frame = requestAnimationFrame(() => {
+      if (!menuRef.current) return;
+      const { offsetWidth, offsetHeight } = menuRef.current;
+      const MARGIN = 4;
+      const left = Math.max(0, Math.min(x, window.innerWidth - offsetWidth - MARGIN));
+      const top = Math.max(0, Math.min(y, window.innerHeight - offsetHeight - MARGIN));
+      setClampedPos({ left, top });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [visible, x, y]);
+
   if (!visible || !latlng) return null;
 
   const menuItems = [
@@ -57,10 +79,15 @@ function MapContextMenu({ visible, x, y, latlng, onClose }: MapContextMenuProps)
           onClose();
         }}
       />
-      {/* 浮動選單 */}
+      {/* 浮動選單：位置已夾在視窗內，計算前隱藏以避免閃爍 */}
       <div
+        ref={menuRef}
         className="fixed z-[9999] min-w-36 overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/10"
-        style={{ left: x, top: y }}
+        style={{
+          left: clampedPos?.left ?? x,
+          top: clampedPos?.top ?? y,
+          visibility: clampedPos ? 'visible' : 'hidden',
+        }}
         onContextMenu={(e) => e.preventDefault()} // to prevent default context menu on the menu itself
       >
         {menuItems.map((item) => (
