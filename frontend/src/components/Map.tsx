@@ -10,6 +10,7 @@ import MapContextMenu, {
   type ContextMenuState,
 } from '@/components/MapContextMenu';
 import useLocationStore from '@/stores/useLocationStore';
+import MovementMethodToggle from '@/components/MovementMethodToggle';
 // Fix Leaflet 預設 marker icon 在 Vite 環境破圖的問題
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -46,7 +47,7 @@ function Map() {
     });
 
   return (
-    <div className="flex-1">
+    <div className="relative flex-1">
       <MapContainer
         center={DEFAULT_CENTER}
         zoom={DEFAULT_ZOOM}
@@ -72,6 +73,9 @@ function Map() {
 
       {/* 右鍵浮動選單（在 MapContainer 外以避免 z-index 問題）*/}
       <MapContextMenu {...menuState} onClose={handleMenuClose} />
+
+      {/* 移動方式切換（右上角）*/}
+      <MovementMethodToggle />
     </div>
   );
 }
