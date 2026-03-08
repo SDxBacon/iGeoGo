@@ -4,7 +4,8 @@ import useMapStore from '@/stores/useMapStore';
 const METHODS = [MovementMethod.Teleport, MovementMethod.Route] as const;
 
 function MovementMethodToggle() {
-  const { movementMethod, setMovementMethod } = useMapStore();
+  const movementMethod = useMapStore((state) => state.movementMethod);
+  const setMovementMethod = useMapStore((state) => state.setMovementMethod);
 
   return (
     <div className="absolute right-2 top-2 z-[1000] flex overflow-hidden rounded-lg shadow-md ring-1 ring-black/10">
