@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import { useImmer } from 'use-immer';
 import L from 'leaflet';
 import isNil from 'lodash/isNil';
@@ -51,6 +51,7 @@ function Map() {
       <MapContainer
         center={DEFAULT_CENTER}
         zoom={DEFAULT_ZOOM}
+        zoomControl={false}
         style={{ width: '100%', height: '100%' }}
       >
         {/* OpenStreetMap 圖磚 */}
@@ -66,6 +67,9 @@ function Map() {
         {isNil(currentLocation) ? null : (
           <LocationIndicator position={[currentLocation.lat, currentLocation.lng]} />
         )}
+
+        {/* 縮放控制（右下角）*/}
+        <ZoomControl position="bottomright" />
 
         {/* 右鍵選單事件處理 */}
         <MapContextMenuHandler onOpen={handleMenuOpen} onClose={handleMenuClose} />
