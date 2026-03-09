@@ -70,6 +70,9 @@ function Map() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
+        {/* 移動方式切換（右上角）*/}
+        <MovementMethodToggle />
+
         {/* 右鍵選單事件處理 */}
         <MapContextMenuHandler onOpen={handleMenuOpen} onClose={handleMenuClose} />
 
@@ -79,9 +82,6 @@ function Map() {
 
       {/* 右鍵浮動選單（在 MapContainer 外以避免 z-index 問題）*/}
       <MapContextMenu {...menuState} onClose={handleMenuClose} />
-
-      {/* 移動方式切換（右上角）*/}
-      <MovementMethodToggle />
     </div>
   );
 }
