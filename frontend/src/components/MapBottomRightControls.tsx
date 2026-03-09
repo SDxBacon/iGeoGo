@@ -6,6 +6,7 @@ import { PiDevices } from 'react-icons/pi';
 import { BiCurrentLocation } from 'react-icons/bi';
 import LeafletButton from '@/components/buttons/LeafletButton';
 import LeafletButtonGroup from '@/components/buttons/LeafletButtonGroup';
+import { useLocationStore } from '@/stores/useLocationStore';
 
 /**
  * MapBottomRightControls component 用於在地圖右下角添加自定義控制按鈕。
@@ -16,6 +17,16 @@ function MapBottomRightControls() {
   const map = useMap();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [, forceUpdate] = useState(0);
+
+  const currentLocation = useLocationStore((s) => s.currentLocation);
+
+  const handleRecenter = () => {
+    if (map && currentLocation) {
+      // 以目前位置為中心，並確保縮放級別至少為 15，以便更清楚地看到位置。
+      // TODO: 未來縮小級別要依照 movement method 調整
+      map.setView([currentLocation.lat, currentLocation.lng], Math.max(map.getZoom(), 15));
+    }
+  };
 
   useEffect(() => {
     const control = new L.Control({ position: 'bottomright' });
@@ -55,7 +66,7 @@ function MapBottomRightControls() {
        * Recenter 按鈕
        */}
       <LeafletButtonGroup className="leaflet-bar mb-2">
-        <LeafletButton title="Recenter" onClick={() => {}}>
+        <LeafletButton title="Recenter" onClick={handleRecenter}>
           <BiCurrentLocation />
         </LeafletButton>
       </LeafletButtonGroup>
