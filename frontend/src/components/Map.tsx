@@ -1,7 +1,9 @@
-import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import { useImmer } from 'use-immer';
 import L from 'leaflet';
 import isNil from 'lodash/isNil';
+// import hooks
+import useLocationStore from '@/stores/useLocationStore';
 // import local components
 import LocationIndicator from '@/components/LocationIndicator';
 import RouteLayer from '@/components/RouteLayer';
@@ -9,7 +11,7 @@ import MapContextMenu, {
   MapContextMenuHandler,
   type ContextMenuState,
 } from '@/components/MapContextMenu';
-import useLocationStore from '@/stores/useLocationStore';
+import MapBottomRightControls from './MapBottomRightControls';
 import MovementMethodToggle from '@/components/MovementMethodToggle';
 // Fix Leaflet 預設 marker icon 在 Vite 環境破圖的問題
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
@@ -54,12 +56,6 @@ function Map() {
         zoomControl={false}
         style={{ width: '100%', height: '100%' }}
       >
-        {/* OpenStreetMap 圖磚 */}
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-
         {/* 路線：currentLocation → 台北 101 */}
         <RouteLayer />
 
@@ -68,11 +64,17 @@ function Map() {
           <LocationIndicator position={[currentLocation.lat, currentLocation.lng]} />
         )}
 
-        {/* 縮放控制（右下角）*/}
-        <ZoomControl position="bottomright" />
+        {/* OpenStreetMap 圖磚（需在 MapBottomRightControls 之前，確保 attribution control 先加入） */}
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
         {/* 右鍵選單事件處理 */}
         <MapContextMenuHandler onOpen={handleMenuOpen} onClose={handleMenuClose} />
+
+        {/* 自定義右下角控制按鈕 */}
+        <MapBottomRightControls />
       </MapContainer>
 
       {/* 右鍵浮動選單（在 MapContainer 外以避免 z-index 問題）*/}
