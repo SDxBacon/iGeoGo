@@ -1,6 +1,6 @@
 import useInitial from '@/hooks/useInitial';
 
-import Map from '@/components/Map';
+import Map from '@/Map';
 import AppHeader from '@/components/AppHeader';
 
 function App() {

@@ -11,7 +11,7 @@ import MapContextMenu, {
   MapContextMenuHandler,
   type ContextMenuState,
 } from '@/components/MapContextMenu';
-import MapBottomRightControls from './MapBottomRightControls';
+import MapBottomRightControls from '@/components/MapBottomRightControls';
 import MovementMethodToggle from '@/components/MovementMethodToggle';
 // Fix Leaflet 預設 marker icon 在 Vite 環境破圖的問題
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
