@@ -56,7 +56,7 @@ function MapBottomRightControls() {
       {/**
        * Device List 按鈕
        */}
-      <LeafletButtonGroup className="leaflet-bar mb-2">
+      <LeafletButtonGroup className="mb-2">
         <LeafletButton title="Device List" onClick={() => {}}>
           <PiDevices />
         </LeafletButton>
@@ -65,7 +65,7 @@ function MapBottomRightControls() {
       {/**
        * Recenter 按鈕
        */}
-      <LeafletButtonGroup className="leaflet-bar mb-2">
+      <LeafletButtonGroup className="mb-2">
         <LeafletButton title="Recenter" onClick={handleRecenter}>
           <BiCurrentLocation />
         </LeafletButton>
@@ -74,7 +74,7 @@ function MapBottomRightControls() {
       {/**
        * Zoom In/Out 按鈕，外觀與 Leaflet 原生控制按鈕一致。
        */}
-      <LeafletButtonGroup className="leaflet-bar" orientation="vertical">
+      <LeafletButtonGroup orientation="vertical">
         {/* Zoom In */}
         <LeafletButton title="Zoom in" onClick={() => map.zoomIn()}>
           +
