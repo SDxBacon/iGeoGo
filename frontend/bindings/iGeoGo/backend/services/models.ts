@@ -85,3 +85,40 @@ export class NativeLocation {
         return new NativeLocation($$parsedSource as Partial<NativeLocation>);
     }
 }
+
+/**
+ * SearchResult 代表一筆地點搜尋結果。
+ * Latlng 對應前端 [number, number] tuple。
+ */
+export class SearchResult {
+    "id": string;
+    "displayName": string;
+    "description": string;
+    "latlng": number[];
+
+    /** Creates a new SearchResult instance. */
+    constructor($$source: Partial<SearchResult> = {}) {
+        if (!("id" in $$source)) {
+            this["id"] = "";
+        }
+        if (!("displayName" in $$source)) {
+            this["displayName"] = "";
+        }
+        if (!("description" in $$source)) {
+            this["description"] = "";
+        }
+        if (!("latlng" in $$source)) {
+            this["latlng"] = Array.from({ length: 2 }, () => 0);
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new SearchResult instance from a string or object.
+     */
+    static createFrom($$source: any = {}): SearchResult {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new SearchResult($$parsedSource as Partial<SearchResult>);
+    }
+}

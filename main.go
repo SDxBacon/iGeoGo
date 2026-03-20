@@ -41,6 +41,7 @@ func main() {
 		Description: "A demo of using raw HTML & CSS",
 		Services: []application.Service{
 			application.NewService(&services.LocationService{}),
+			application.NewService(&services.SearchService{}),
 		},
 		Assets: application.AssetOptions{
 			Handler: application.AssetFileServerFS(assets),
